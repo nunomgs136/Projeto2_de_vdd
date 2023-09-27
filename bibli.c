@@ -12,6 +12,15 @@ void printMenu(){
     printf("0. Sair\n");
 
 }
-int teste(int n1, int n2){
-    return 1;
+int cria_cliente(ListaDeClientes *c){
+    printf("Digite o seu nome: ");
+    scanf("%s", c->clientes[c->qtd].nome);
+    printf("Digite o seu CPF: ");
+    scanf("%s", c->clientes[c->qtd].CPF);
+    printf("Digite o tipo da conta: ");
+    scanf("%s", c->clientes[c->qtd].tipo_de_conta);
+    printf("Digite o seu nome: ");
+    scanf("%s", c->clientes[c->qtd].valor_inicial);
+    printf("Digite o seu nome: ");
+    scanf("%s", c->clientes[c->qtd].senha);
 }

@@ -4,15 +4,18 @@
 #include "bibli.h"
 int main(){
     int opcao;
+    ListaDeClientes c;
     do{
         printMenu;
+      
+        
         
         scanf("%d",&opcao);
         
       
         switch(opcao){
             case 1:
-                printf("Criar Cliente\n");
+                cria_cliente(&c);
                 break;
             case 2:
                 printf("Deletar Cliente\n");
