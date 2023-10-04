@@ -34,5 +34,35 @@ int cria_cliente(ListaDeClientes *c){
     c->qtd+=1;
     return 0;
 }
+int salvarCliente(ListaDeClientes c, char nome[]){
+    FILE *f = fopen(nome, "wb");
+
+    fwrite(&c, sizeof(ListaDeClientes),1,f);
+    fclose(f);
+    return 0;
+}
+int carregarClientes(ListaDeClientes *c, char nome[]){
+    FILE *f = fopen(nome, "rb");
+    // checagem para ver se o arquivo tem erro ou nao
+    if(f == NULL){
+        printf("Erro");
+        return 1;
+    }
+
+    fread(c,sizeof(ListaDeClientes),1,f);
+    fclose(f);
+    return 0;}
+
+
+int listaClientes(ListaDeClientes c){
+    for(int i = 0; i < c.qtd;i++){
+        
+        printf("Nome: %s \n",c.clientes[i]);
+        printf("CPF: %s \n",c.clientes[i]);
+        printf("Tipo: %s \n",c.clientes[i]);
+        printf("\n");
+    }
+
+    return 0;}
 
 
