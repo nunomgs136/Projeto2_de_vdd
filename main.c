@@ -1,19 +1,28 @@
 
+#include "bibli.h"
 #include <stdio.h>
 #include <string.h>
-#include "bibli.h"
-int main(){
+int main() {
     int opcao;
+    int cod;
+
     ListaDeClientes c;
-    do{
-        printMenu;
-      
-        
-        
-        scanf("%d",&opcao);
-        
-      
-        switch(opcao){
+    char nome[9] = "Clientes";
+
+    cod = carregarClientes(&c,nome);
+
+    if(cod == 1){
+        c.qtd = 0;
+    }
+
+
+    do {
+        printf("%d\n",c.qtd);
+        printMenu();
+
+        scanf("%d", &opcao);
+
+        switch (opcao) {
             case 1:
                 cria_cliente(&c);
                 break;
@@ -21,10 +30,11 @@ int main(){
                 printf("Deletar Cliente\n");
                 break;
             case 3:
-                printf("Listar Clientes\n");
+                listar_clientes(c);
                 break;
             case 4:
-                printf("Débito\n");
+                debito(&c);
+
                 break;
             case 5:
                 printf("Depósito\n");
@@ -37,11 +47,9 @@ int main(){
                 break;
             case 0:
                 printf("Saindo...\n");
-                break;    
+                break;
         }
 
-
-
-
-    }while(opcao!=0);
+    } while (opcao != 0);
+    salvarCliente(c, nome);
 }
