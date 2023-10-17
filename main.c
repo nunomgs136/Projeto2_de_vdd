@@ -27,7 +27,7 @@ int main() {
                 cria_cliente(&c);
                 break;
             case 2:
-                printf("Deletar Cliente\n");
+                deletar_cliente(&c);
                 break;
             case 3:
                 listar_clientes(c);
@@ -37,13 +37,13 @@ int main() {
 
                 break;
             case 5:
-                printf("Depósito\n");
+                deposito(&c);
                 break;
             case 6:
                 printf("Extrato\n");
                 break;
             case 7:
-                printf("Transferência entre duas contas\n");
+                transferencia(&c);
                 break;
             case 0:
                 printf("Saindo...\n");
