@@ -17,10 +17,16 @@ typedef struct{
 
 void printMenu();
 int cria_cliente(ListaDeClientes *c);
-int deleta_cliente(ListaDeClientes *c);
+
 int listar_clientes(ListaDeClientes c);
 //int extrato(Lista_de_coisas(ficapradpskkkk));
 int salvarCliente(ListaDeClientes c, char nome[]);
 int carregarClientes(ListaDeClientes *c,char nome[]);
+int debitoCliente(Cliente *c,long valor);
 int debito(ListaDeClientes *c);
+int depositoCliente(Cliente *c,long valor);
+int deposito(ListaDeClientes *c);
+int transferencia(ListaDeClientes *c);
+int deletar_cliente(ListaDeClientes *c);
+
 #endif //UNTITLED2_BIBLI_H
