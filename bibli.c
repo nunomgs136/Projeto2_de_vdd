@@ -96,7 +96,7 @@ int carregarClientes(ListaDeClientes *c, char nome[]){
         printf("Erro");
         return 1;
     }
-
+    //leitura do arquivo
     fread(c,sizeof(ListaDeClientes),1,f);
     fclose(f);
     return 0;
@@ -105,7 +105,7 @@ int carregarClientes(ListaDeClientes *c, char nome[]){
 
 int listar_clientes(ListaDeClientes c){
     for(int i = 0; i < c.qtd;i++){
-
+        //informações da array do cliente 
         printf("Nome: %s \n",c.clientes[i].nome);
         printf("CPF: %ld \n", c.clientes[i].CPF);
         printf("Tipo: %s \n",c.clientes[i].tipo_de_conta);
@@ -117,24 +117,29 @@ int listar_clientes(ListaDeClientes c){
 
 
 int debitoCliente(Cliente *c,double valor,char tipo[]){
-    
+    //Analiza se a conta do cliente fornecido no parametro é Comum ou Plus
     if(strcmp(c->tipo_de_conta,"Comum") == 0){
-
+        //Faz a operção de debito no cliente Comum dentro do limite da conta
         if((c->valor_inicial - valor*1.05) > (-1000)){
             c->valor_inicial =  c->valor_inicial - valor*1.05;
+            //Anexa a operação feita no extrato do cliente
             armazenar_extrato(c,tipo, -valor, valor*0.05);
             return 0;
 
-        }else{printf("Saldo insuficiente");
+        }//Aviso caso o debito da conta passe o limite
+        else{printf("Saldo insuficiente");
             return 1;}
     }
     else if(strcmp(c->tipo_de_conta,"Plus")==0){
+        //Faz a operção de debito no cliente Plus dentro do limite da conta
         if((c->valor_inicial - valor*1.03) > (-5000)){
             c->valor_inicial =  c->valor_inicial - valor*1.03;
+            //Anexa a operação feita no extrato do cliente
             armazenar_extrato(c, tipo, -valor, valor*0.03);
-
             return 0;
-        }else{printf("Saldo insuficiente");
+
+        }//Aviso caso o debito da conta passe o limite
+        else{printf("Saldo insuficiente");
             return 1;}
     }
 }
@@ -144,7 +149,7 @@ int debito(ListaDeClientes *c){
     char senha [40];
     long cpf;
     double valor;
-
+    //Pede as informações de CPF e senha para o cliente fazer o debito
     printf("Digite o seu cpf: ");
     scanf("%ld", &cpf);
     printf("Digite a senha: ");
@@ -152,6 +157,7 @@ int debito(ListaDeClientes *c){
 
 
     for(int i = 0; i <= c->qtd;i++){
+      //Checa se exite um cliente   
       if((cpf == c->clientes[i].CPF) && strcmp(senha, c->clientes[i].senha)==0){
 
         printf("Digite o valor que deseja sacar: ");
