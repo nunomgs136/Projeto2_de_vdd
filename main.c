@@ -2,14 +2,19 @@
 #include "bibli.h"
 #include <stdio.h>
 #include <string.h>
+
 int main() {
+
     int opcao;
     int cod;
 
+
     ListaDeClientes c;
     char nome[9] = "Clientes";
+    char nome_extrato[] = "extrato.txt";
 
     cod = carregarClientes(&c,nome);
+
 
     if(cod == 1){
         c.qtd = 0;
@@ -40,7 +45,7 @@ int main() {
                 deposito(&c);
                 break;
             case 6:
-                printf("Extrato\n");
+                carregarExtrato(&c,nome_extrato);
                 break;
             case 7:
                 transferencia(&c);
@@ -52,4 +57,5 @@ int main() {
 
     } while (opcao != 0);
     salvarCliente(c, nome);
+    escrever_extrato(&c, nome_extrato);
 }
