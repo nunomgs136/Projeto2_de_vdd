@@ -157,15 +157,16 @@ int debito(ListaDeClientes *c){
 
 
     for(int i = 0; i <= c->qtd;i++){
-      //Checa se exite um cliente   
+      //Acessar a conta do cliente para fazer o debito 
       if((cpf == c->clientes[i].CPF) && strcmp(senha, c->clientes[i].senha)==0){
-
+        //pedir o valor do debito
         printf("Digite o valor que deseja sacar: ");
         scanf("%lf",&valor);
-
+        //cham a função q executa o debito da conta
         debitoCliente(&c->clientes[i],valor,tipo);
          break;    
-      }else if(i == c->qtd){
+      }//caso não achar cliente com o CPF e senha dados
+      else if(i == c->qtd){
         printf("CPF ou senha incorretos");
         }
     }
@@ -173,8 +174,9 @@ int debito(ListaDeClientes *c){
 }
 
 int depositoCliente(Cliente *c,double valor,char tipo[]){
-
+     //Anexa a operação feita no extrato do cliente
     armazenar_extrato(c, tipo, valor, valor*0);
+    //Faz a operação de depositar na conta 
     c->valor_inicial = c->valor_inicial + valor;
     return 0;
 }
@@ -183,15 +185,19 @@ int deposito(ListaDeClientes *c){
     char tipo[] = "Deposito";
     long cpf;
     double valor;
+  //Pede o CPF da conta q vai der depositada
     printf("Digite o seu CPF: ");
     scanf("%ld",&cpf);
-    //procura de CPF
+    
     for(int i = 0; i < c->qtd; i++){
-
+        //procura de CPF dentro da array de clientes
         if(cpf == c->clientes[i].CPF){
+            //pede o valor a ser depositado
             printf("Digite um valor para depositar: ");
             scanf("%lf",&valor);
+          //Chama a funçãao q vai efetuar a deposito na conta
             depositoCliente(&c->clientes[i],valor,tipo);
+          //Mostra o saldo do cliente depois de fazer a operação
             printf("Seu saldo atual é: %.2lf\n", c->clientes[i].valor_inicial);
             break;
         }
@@ -213,6 +219,7 @@ int transferencia(ListaDeClientes *c){
     int pos_o=-1;
     int pos_d=-1;
 
+  //Pede o CPF e senha da conta origemda transferencia 
     printf("Digite o seu CPF: ");
     scanf("%ld", &cpf_origem);
 
@@ -220,17 +227,22 @@ int transferencia(ListaDeClientes *c){
     scanf("%s", senha);
 
     for(int i=0; i< c->qtd; i++){
+      //Acessa a conta origem
         if((cpf_origem == c->clientes[i].CPF) && strcmp(senha, c->clientes[i].senha)==0){
+          //Verifica q a conta origem foi acessada
             pos_o=i;
+          //Pede o CPF da conta destino 
             printf("Digite o CPF do destinatário: ");
             scanf("%ld",&cpf_destino);
 
             for(int j=0; j<c->qtd; j++){
+              //Confere se a conta do destinatario existe
                 if(cpf_destino==c->clientes[j].CPF){
+                  //verifica que a conta do destinatário existe
                     pos_d=j;
                     printf("Digite o valor que deseja transferir: ");
                     scanf("%lf",&valor);
-
+                  //verifica se o saldo do cliente é o suficiente
                     if(debitoCliente(&c->clientes[i], valor, tipo)==1){
                         printf("Saldo insuficiente");
                         break;
@@ -239,11 +251,12 @@ int transferencia(ListaDeClientes *c){
                         break;
                     }
                 }
+              //se não for encontrado o cpf do destinatário
             } if(pos_d==-1){
                 printf("CPF do destinatario não encontrado");
                 return 0;}
 
-        }
+        }//se não for encontrado o cpf da origem
     }if(pos_o==-1){
         printf("CPF não encontrado");
         return 0;
@@ -252,9 +265,9 @@ int transferencia(ListaDeClientes *c){
 
 int escrever_extrato(ListaDeClientes *c, char nome[]){
     FILE *f = fopen(nome, "w");
-
+    
     for(int i=0; i<c->qtd; i++){
-
+      //escreve cada operação escrita dentro do array de cada cliente no arquivo
         for(int j=0; j<c->clientes[i].qtd_extrato; j++){
             printf("tipo: %s valor: %.2lf taxa: %.2lf\n", c->clientes[i].operacoes[j].descricao, c->clientes[i].operacoes[j].valor, c->clientes[i].operacoes[j].taxa);
 
@@ -271,17 +284,18 @@ int carregarExtrato(ListaDeClientes *c,char nome[]){
     long cpf;
     char senha[40];
     int pular_linhas=0;
-
+  
     printf("Digite seu cpf: ");
     scanf("%ld", &cpf);
 
     printf("Digite sua senha: ");
     scanf("%s", senha);
-
+    //contador de quantas linhas deve pular no arquivo do extrato para achar a operações do cliente 
     for(int i=0; i<c->qtd; i++){
         pular_linhas+=c->clientes[i].qtd_extrato;
 
         if((cpf == c->clientes[i].CPF) && (strcmp(senha, c->clientes[i].senha)==0)){
+          //remove o número de tamanho do extrato do cliente para não imprimir o extrato do próximo cliente
             pular_linhas-=c->clientes[i].qtd_extrato;
 
             FILE *f = fopen(nome,"r");
@@ -292,6 +306,7 @@ int carregarExtrato(ListaDeClientes *c,char nome[]){
             }
             printf("%d\n",pular_linhas);
             for(int i=c->clientes[i].qtd_extrato-1; i>=0;i--){
+                //imprime etxrato
                 fgets(l,250,f);
                 printf("%s\n", l);
             }
