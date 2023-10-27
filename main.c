@@ -1,5 +1,4 @@
-//Henrique Hodel Babler - RA: 24.123.079-6
-// Nuno Martins Guilhermino da Silva - RA: 24.123.035-8
+
 #include "bibli.h"
 #include <stdio.h>
 #include <string.h>
