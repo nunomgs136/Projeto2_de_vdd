@@ -1,7 +1,7 @@
 # Projeto2_de_vdd
 Este código foi feito com a intenção de imitar um sistema de banco. Foram feitas as seguintes funções para o total funcionamento do código:
 
-Principais informações para funcionamento das funções
+Principais informações para funcionamento das funções:
 * Nós armazenamos os clientes em uma lista com as informações de cada cliente
 * As informações são armazenadas em apenas um item da lista através de um struct, além de uma lista para criação do extrato de cada cliente
 * Existe um número para indentificar a quantidade de clientes, além de outro para a quantidade de operações feitas pelo cliente, ambas feitas para leitura correta das listas e armazenamento de informações em arquivos externos
